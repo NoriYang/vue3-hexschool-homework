@@ -38,7 +38,7 @@
     </tbody>
   </table>
   <Pagination :pages="pagination" @emit-pages="getProducts"></Pagination>
-  <ProductModal ref="productModal" :product="tempProducts" @update-product="updateProduct"></ProductModal>
+  <ProductModal ref="productModal" :product="tempProduct" @update-product="updateProduct"></ProductModal>
   <DelModal :item="tempProduct" ref="delModal" @del-item="delProduct" />
 </template>
 <script>
@@ -61,7 +61,7 @@ export default {
   inject: ['emitter'],
   methods: {
     openModal (isNew, item) {
-      this.tempProduct = isNew ? {} : { ...item }
+      this.tempProduct = isNew ? {} : JSON.parse(JSON.stringify(item))
       this.isNew = isNew
       const productComponent = this.$refs.productModal
       productComponent.showModal()

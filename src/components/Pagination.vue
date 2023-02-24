@@ -14,7 +14,7 @@
         </a>
       </li>
 
-      <li class="page-item" :class="{'disabled' : !has_next}">
+      <li class="page-item" :class="{'disabled' : !pages.has_next}">
         <a class="page-link" href="#" aria-label="Next" @click.prevent="updatePage(pages.current_page + 1)">
           <span aria-hidden="true">&raquo;</span>
         </a>
@@ -22,7 +22,6 @@
 
     </ul>
   </nav>
-  {{ pages }}
 </template>
 
 <script>
