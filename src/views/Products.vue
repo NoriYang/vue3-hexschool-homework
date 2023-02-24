@@ -54,6 +54,7 @@ export default {
     }
   },
   components: { ProductModal, DelModal },
+  inject: ['emitter'],
   methods: {
     openModal (isNew, item) {
       this.tempProduct = isNew ? {} : { ...item }
