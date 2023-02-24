@@ -38,7 +38,7 @@
     </tbody>
   </table>
   <ProductModal ref="productModal" :product="tempProduct" @update-product="updateProduct"></ProductModal>
-  <DelModal :item="tempProduct" ref="delModal" @del-item="delProduct"/>
+  <DelModal :item="tempProduct" ref="delModal" @del-item="delProduct" />
 </template>
 <script>
 import ProductModal from '@/components/ProductModal.vue'
@@ -93,10 +93,21 @@ export default {
       const productComponent = this.$refs.productModal
       this.$http[httpMethod](api, { data: this.tempProduct })
         .then((res) => {
-          this.isLoading = false
-          console.log('res', res)
           productComponent.hideModal()
-          this.getProducts()
+          this.isLoading = false
+          if (res.data.success) {
+            this.getProducts()
+            this.emitter.emit('push-message', {
+              style: 'success',
+              title: '更新成功'
+            })
+          } else {
+            this.emitter.emit('push-message', {
+              style: 'danger',
+              title: '更新失敗',
+              content: res.data.message.join('、')
+            })
+          }
         })
     },
     delProduct () {

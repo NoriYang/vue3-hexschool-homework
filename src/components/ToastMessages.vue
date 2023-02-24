@@ -18,6 +18,7 @@ export default {
   },
   inject: ['emitter'],
   mounted () {
+    console.log('Test')
     // 請自行補上 emitter 事件
     this.emitter.on('push-message', (message) => {
       const { style = 'success', title, content } = message

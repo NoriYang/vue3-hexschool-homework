@@ -1,15 +1,18 @@
 <template lang="">
   <Navbar></Navbar>
   <div class="container-fluid">
+    <ToastMessage></ToastMessage>
     <router-view />
   </div>
 </template>
 <script>
 import Navbar from '@/components/Navbar.vue'
 import emitter from '@/methods/emitter'
+import ToastMessage from '@/components/ToastMessages.vue'
 export default {
   components: {
-    Navbar
+    Navbar,
+    ToastMessage
   },
   provide () {
     return {
