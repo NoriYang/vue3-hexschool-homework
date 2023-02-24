@@ -1,4 +1,5 @@
 <template>
+  <loading :active="isLoading"></loading>
   <div class="text-end">
     <button class="btn btn-primary" type="button" @click="openModal(true)">新增產品</button>
   </div>
@@ -48,7 +49,8 @@ export default {
       products: [],
       pagination: {},
       tempProduct: {},
-      isNaN: false
+      isNaN: false,
+      isLoading: false
     }
   },
   components: { ProductModal, DelModal },
@@ -66,8 +68,10 @@ export default {
     },
     getProducts () {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products`
+      this.isLoading = true
       this.$http.get(api)
         .then((res) => {
+          this.isLoading = false
           if (res.data.success) {
             this.products = res.data.products
             this.pagination = res.data.pagination
@@ -84,9 +88,11 @@ export default {
         api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${item.id}`
         httpMethod = 'put'
       }
+      this.isLoading = true
       const productComponent = this.$refs.productModal
       this.$http[httpMethod](api, { data: this.tempProduct })
         .then((res) => {
+          this.isLoading = false
           console.log('res', res)
           productComponent.hideModal()
           this.getProducts()
@@ -94,9 +100,11 @@ export default {
     },
     delProduct () {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${this.tempProduct.id}`
+      this.isLoading = true
       this.$http.delete(api)
         .then((res) => {
           if (res.data.success) {
+            this.isLoading = false
             const delComponent = this.$refs.delModal
             delComponent.hideModal()
             this.getProducts()

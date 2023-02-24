@@ -1,5 +1,6 @@
 <template lang="">
   <div>
+    <loading :active="isLoading"></loading>
     <div class="container mt-5">
       <form class="row justify-content-center" @submit.prevent="signIn">
         <div class="col-md-6">
@@ -44,15 +45,18 @@ export default {
       user: {
         username: '',
         password: ''
-      }
+      },
+      isLoading: false
     }
   },
   methods: {
     signIn () {
       const api = `${process.env.VUE_APP_API}admin/signin`
+      this.isLoading = true
       this.$http.post(api, this.user)
         .then((res) => {
           if (res.data.success) {
+            this.isLoading = false
             const { token, expired } = res.data
             document.cookie = `hexToken=${token};expires=${new Date(expired)}`
             this.$router.push('/dashboard/products')
