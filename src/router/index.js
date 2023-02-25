@@ -9,15 +9,23 @@ const routes = [
   },
   {
     path: '/login',
-    component: () => import('../views/Login.vue')
+    component: () => import('@/views/Login.vue')
   },
   {
     path: '/dashboard',
-    component: () => import('../views/Dashboard.vue'),
+    component: () => import('@/views/Dashboard.vue'),
     children: [
       {
         path: 'products',
-        component: () => import('../views/Products')
+        component: () => import('@/views/Products')
+      },
+      {
+        path: 'orders',
+        component: () => import('@/views/Orders')
+      },
+      {
+        path: 'coupons',
+        component: () => import('@/views/Coupons')
       }
     ]
   }
@@ -25,6 +33,7 @@ const routes = [
 
 const router = createRouter({
   history: createWebHashHistory(),
+  linkActiveClass: 'active',
   routes
 })
 
