@@ -19,10 +19,10 @@
         <td>{{ item.category }}</td>
         <td>{{ item.title }}</td>
         <td class="text-right">
-          {{ currency(item.origin_price) }}
+          {{ $filters.currency(item.origin_price) }}
         </td>
         <td class="text-right">
-          {{ currency(item.price) }}
+          {{ $filters.currency(item.price) }}
         </td>
         <td>
           <span v-if="item.is_enabled" class="text-success">啟用</span>
@@ -46,7 +46,6 @@
 import Pagination from '@/components/Pagination.vue'
 import ProductModal from '@/components/ProductModal.vue'
 import DelModal from '@/components/DelModal.vue'
-import { currency } from '@/methods/filters.js'
 
 export default {
   data () {
@@ -61,7 +60,6 @@ export default {
   components: { ProductModal, DelModal, Pagination },
   inject: ['emitter'],
   methods: {
-    currency,
     openModal (isNew, item) {
       this.tempProduct = isNew ? {} : JSON.parse(JSON.stringify(item))
       this.isNew = isNew
